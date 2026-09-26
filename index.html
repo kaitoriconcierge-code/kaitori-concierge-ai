@@ -10,7 +10,47 @@ function baseEstimate(){let cat=$('category').value,m=$('model').value.toLowerCa
 async function loadPastRecords(){const maker=$('maker').value.trim(),model=$('model').value.trim(),category=$('category').value;if(!maker&&!model){alert('メーカーまたは型番・商品名を入力してください');return}$('pastBox').style.display='block';$('pastContent').innerHTML='検索中...';try{const u=GAS_URL+'?maker='+encodeURIComponent(maker)+'&model='+encodeURIComponent(model)+'&category='+encodeURIComponent(category);const res=await fetch(u);const data=await res.json();if(data.result!=='success')throw new Error(data.message||'検索に失敗しました');const records=data.records||[];if(!records.length){$('pastContent').innerHTML='該当する過去実績はありません。';return}$('pastContent').innerHTML='<b>過去実績：'+records.length+'件</b>'+records.slice(0,5).map(r=>'<div class="pastItem"><b>'+(r.matchType?esc(r.matchType)+'｜':'')+esc(r.maker)+' '+esc(r.model)+'</b>'+(r.year?'<br>'+esc(r.year)+'年':'')+(r.correctedPurchase!==''&&r.correctedPurchase!=null?'<br>前回買取：<b>'+Number(r.correctedPurchase).toLocaleString('ja-JP')+'円</b>':'')+(r.correctedSale!==''&&r.correctedSale!=null?'<br>販売設定：<b>'+Number(r.correctedSale).toLocaleString('ja-JP')+'円</b>':'')+(r.actualSale!==''&&r.actualSale!=null?'<br>実販売：<b>'+Number(r.actualSale).toLocaleString('ja-JP')+'円</b>':'<br>実販売：未登録')+(r.profitRate!==''&&r.profitRate!=null?'<br>利益率：'+(Number(r.profitRate)*100).toFixed(1)+'%':'')+(r.stockDays!==''&&r.stockDays!=null?'<br>在庫日数：'+esc(r.stockDays)+'日':'<br>在庫日数：未登録')+(r.reason?'<br>理由：'+esc(r.reason):'')+(r.memo?'<br>メモ：'+esc(r.memo):'')+'</div>').join('')}catch(e){$('pastContent').innerHTML='⚠️ 過去実績を取得できませんでした。<br>'+esc(e.message)}}
 function assess(){if(!$('maker').value.trim()&&!$('model').value.trim()){alert('メーカーまたは型番・商品名を入力してください');return}loadPastRecords();let mid=baseEstimate(),lo=mid*.82,hi=mid*1.18,sell=lo*.98,net=sell*.9,rec=net*.4,p=rec*.8,d=rec*1.2;$('market').textContent=yen(lo)+' 〜 '+yen(hi);$('profit').textContent=yen(p);$('recommended').textContent=yen(rec);$('deal').textContent=yen(d);$('sell').textContent=yen(sell);$('why').innerHTML='<b>査定理由</b><br>'+esc($('maker').value||'商品')+' '+esc($('model').value||'')+' のカテゴリ・年式・商品状態・動作状態をもとに試算しました。推奨買取額は販売手数料10%と店舗利益を考慮した設定です。<br><span style="color:#b45309">※過去実績は上の「📚 過去実績」に表示します。</span>';$('result').style.display='block';$('result').scrollIntoView({behavior:'smooth'});window.lastRec=rec;window.lastSell=sell;$('manualBuy').value=Math.round(rec/100)*100;$('manualSell').value=Math.round(sell/100)*100}
 function toggleDetail(){let b=$('detailBox');b.style.display=b.style.display==='block'?'none':'block'}
-function saveAssessment(){let staff=$('staff').value.trim();if(!staff){alert('担当者名を入力してください');$('staff').scrollIntoView({behavior:'smooth'});return}if(!window.lastRec){alert('先にAI査定を実行してください');return}let buy=parseInt(($('manualBuy').value||'').replace(/,/g,'')),sell=parseInt(($('manualSell').value||'').replace(/,/g,''));if(isNaN(buy)||isNaN(sell)){alert('修正後の買取額と販売価格を入力してください');return}let reason=$('editReason').value;if((buy!=Math.round(window.lastRec/100)*100||sell!=Math.round(window.lastSell/100)*100)&&!reason){alert('金額を修正した場合は修正理由を選択してください');return}let d=new Date(),pad=n=>String(n).padStart(2,'0'),key='kc-seq-'+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate()),seq=(+localStorage.getItem(key)||0)+1;localStorage.setItem(key,seq);let no='KC'+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+String(seq).padStart(3,'0');let item={no,datetime:d.toLocaleString('ja-JP'),staff,category:$('category').value,maker:$('maker').value,model:$('model').value,year:$('year').value,condition:$('condition').value,working:$('working').value,aiBuy:Math.round(window.lastRec/100)*100,aiSell:Math.round(window.lastSell/100)*100,finalBuy:buy,finalSell:sell,reason,memo:$('editMemo').value};let arr=JSON.parse(localStorage.getItem('kaitori-assessments')||'[]');arr.unshift(item);localStorage.setItem('kaitori-assessments',JSON.stringify(arr));$('registered').innerHTML='⏳ Googleスプレッドシートへ保存中...';renderHistory();const gasData={staff:item.staff,category:item.category,maker:item.maker,model:item.model,year:item.year,condition:item.condition,operation:item.working,aiPurchase:item.aiBuy,aiSale:item.aiSell,correctedPurchase:item.finalBuy,correctedSale:item.finalSell,reason:item.reason,memo:item.memo};fetch(GAS_URL,{method:'POST',body:JSON.stringify(gasData)}).then(()=>{$('registered').innerHTML='✅ 査定実績を保存しました　管理No：<b>'+no+'</b><br>担当：'+esc(staff)+' ／ 買取 '+buy.toLocaleString('ja-JP')+'円 ／ 販売 '+sell.toLocaleString('ja-JP')+'円<br>☁️ Googleスプレッドシートへ送信しました。'}).catch(()=>{$('registered').innerHTML='⚠️ iPhone内には保存しましたが、Googleスプレッドシートへの送信に失敗しました。<br>管理No：<b>'+no+'</b>'})}
+function saveAssessment(){
+  let staff=$('staff').value.trim();
+  if(!staff){
+    alert('担当者名を入力してください');
+    return;
+  }
+
+  let data={
+    staff:staff,
+    category:$('category').value,
+    maker:$('maker').value.trim(),
+    model:$('model').value.trim(),
+    year:$('year').value.trim(),
+    condition:$('condition').value,
+    operation:$('operation').value,
+    aiPurchase:$('aiPurchase').value,
+    aiSale:$('aiSale').value,
+    correctedPurchase:$('correctedPurchase').value,
+    correctedSale:$('correctedSale').value,
+    reason:$('reason').value,
+    memo:$('memo').value
+  };
+
+  fetch(GAS_URL,{
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify(data)
+  });
+
+  let arr=JSON.parse(localStorage.getItem('kaitori-assessments')||'[]');
+  arr.unshift(data);
+  localStorage.setItem('kaitori-assessments',JSON.stringify(arr));
+  renderHistory();
+
+  $('registered').innerHTML='⏳ Googleスプレッドシートへ保存中...';
+
+  setTimeout(()=>{
+    $('registered').innerHTML='✅ 査定実績を保存しました';
+  },1500);
+}
 function renderHistory(){let arr=JSON.parse(localStorage.getItem('kaitori-assessments')||'[]'),box=$('history');if(!arr.length){box.innerHTML='まだ保存された査定はありません。';return}box.innerHTML=arr.slice(0,20).map(x=>'<div style="padding:10px 0;border-bottom:1px solid #e5e7eb"><b>'+esc(x.no)+'｜'+esc(x.maker||'')+' '+esc(x.model||'')+'</b><br>'+esc(x.datetime)+'　担当：<b>'+esc(x.staff)+'</b><br>AI：買取 '+Number(x.aiBuy).toLocaleString('ja-JP')+'円 / 販売 '+Number(x.aiSell).toLocaleString('ja-JP')+'円<br>確定：<b>買取 '+Number(x.finalBuy).toLocaleString('ja-JP')+'円 / 販売 '+Number(x.finalSell).toLocaleString('ja-JP')+'円</b>'+(x.reason?'<br>修正理由：'+esc(x.reason):'')+(x.memo?'<br>メモ：'+esc(x.memo):'')+'</div>').join('')}
 function clearHistory(){if(confirm('このiPhoneに保存された査定履歴をすべて削除しますか？')){localStorage.removeItem('kaitori-assessments');renderHistory()}}
 renderHistory();</script></body></html>
