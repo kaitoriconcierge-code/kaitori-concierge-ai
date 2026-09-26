@@ -10,7 +10,11 @@
  let no='KC'+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+String(seq).padStart(3,'0');
  let item={no,datetime:d.toLocaleString('ja-JP'),staff,category:$('category').value,maker:$('maker').value,model:$('model').value,year:$('year').value,condition:$('condition').value,working:$('working').value,aiBuy:Math.round(window.lastRec/100)*100,aiSell:Math.round(window.lastSell/100)*100,finalBuy:buy,finalSell:sell,reason,memo:$('editMemo').value};
  let arr=JSON.parse(localStorage.getItem('kaitori-assessments')||'[]');arr.unshift(item);localStorage.setItem('kaitori-assessments',JSON.stringify(arr));
- $('registered').innerHTML='✅ 査定実績を保存しました　管理No：<b>'+no+'</b><br>担当：'+staff+' ／ 買取 '+buy.toLocaleString('ja-JP')+'円 ／ 販売 '+sell.toLocaleString('ja-JP')+'円'; renderHistory();
+ $('registered').innerHTML='⏳ Googleスプレッドシートへ保存中です…　管理No：<b>'+no+'</b>'; renderHistory();
+ const gasData={staff:item.staff,category:item.category,maker:item.maker,model:item.model,year:item.year,condition:item.condition,operation:item.working,aiPurchase:item.aiBuy,aiSale:item.aiSell,correctedPurchase:item.finalBuy,correctedSale:item.finalSell,reason:item.reason,memo:item.memo};
+ fetch('https://script.google.com/macros/s/AKfycbwSTCcWr194mK1tPLdeqEZUYXjPM-Oe7xHEDe_rM0T_Rr0SS24905wZGfivJRAGVXvtyg/exec',{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(gasData)})
+ .then(()=>{$('registered').innerHTML='✅ 査定実績を保存しました　管理No：<b>'+no+'</b><br>担当：'+staff+' ／ 買取 '+buy.toLocaleString('ja-JP')+'円 ／ 販売 '+sell.toLocaleString('ja-JP')+'円<br><span style="color:#047857">Googleスプレッドシートへ送信しました。</span>';})
+ .catch(err=>{$('registered').innerHTML='⚠️ iPhone内には保存しましたが、Googleスプレッドシートへの送信に失敗しました。<br>'+String(err);});
 }
 function renderHistory(){let arr=JSON.parse(localStorage.getItem('kaitori-assessments')||'[]'),box=$('history');if(!arr.length){box.innerHTML='まだ保存された査定はありません。';return}box.innerHTML=arr.slice(0,20).map(x=>'<div style="padding:10px 0;border-bottom:1px solid #e5e7eb"><b>'+x.no+'｜'+(x.maker||'')+' '+(x.model||'')+'</b><br>'+x.datetime+'　担当：<b>'+x.staff+'</b><br>AI：買取 '+x.aiBuy.toLocaleString('ja-JP')+'円 / 販売 '+x.aiSell.toLocaleString('ja-JP')+'円<br>確定：<b>買取 '+x.finalBuy.toLocaleString('ja-JP')+'円 / 販売 '+x.finalSell.toLocaleString('ja-JP')+'円</b>'+(x.reason?'<br>修正理由：'+x.reason:'')+(x.memo?'<br>メモ：'+x.memo:'')+'</div>').join('')}
 function clearHistory(){if(confirm('このiPhoneに保存された査定履歴をすべて削除しますか？')){localStorage.removeItem('kaitori-assessments');renderHistory()}}
