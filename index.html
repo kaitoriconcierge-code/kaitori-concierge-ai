@@ -1,119 +1,94 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="theme-color" content="#f7fbff" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#eef7ff">
 <title>シマエナガ漢字テスト</title>
 <style>
-  :root{
-    --bg:#f6fbff; --card:#ffffff; --ink:#233044; --sub:#66758a; --line:#dbe7f2;
-    --accent:#6ea8fe; --accent2:#ffb7c5; --ok:#27ae60; --ng:#e74c3c;
-  }
-  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  body{
-    margin:0; font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
-    background:linear-gradient(180deg,#eef8ff 0%,#fff8fb 100%); color:var(--ink);
-    min-height:100vh; touch-action:manipulation;
-  }
-  .wrap{max-width:980px;margin:0 auto;padding:16px 16px 40px}
-  .top{
-    display:flex;align-items:center;gap:12px;margin-bottom:14px
-  }
-  .bird{
-    width:58px;height:58px;border-radius:50%;background:white;border:2px solid #dfeaf3;
-    display:grid;place-items:center;font-size:34px;box-shadow:0 8px 24px rgba(60,100,140,.10)
-  }
-  h1{font-size:clamp(22px,4vw,34px);margin:0}
-  .tag{color:var(--sub);font-size:14px;margin-top:2px}
-  .card{
-    position:relative;z-index:1;
-    background:rgba(255,255,255,.96);border:1px solid #e6eef5;border-radius:22px;
-    box-shadow:0 12px 34px rgba(47,83,115,.09);padding:18px;margin-bottom:14px
-  }
-  .menu{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .field label{display:block;font-size:13px;color:var(--sub);margin:0 0 7px 4px}
-  select,button{
-    width:100%;border:none;border-radius:14px;padding:14px 16px;font-size:17px;font-weight:700;
-    touch-action:manipulation;-webkit-user-select:none;user-select:none;cursor:pointer;
-  }
-  button{min-height:56px;-webkit-appearance:none;appearance:none}
-  #start{min-height:68px;font-size:22px}
-  #judgeBtn{font-size:22px;min-height:68px}
-
-  select{background:#f2f7fb;color:var(--ink);border:1px solid var(--line)}
-  button{background:var(--accent);color:white;box-shadow:0 6px 16px rgba(70,125,220,.22)}
-  button.secondary{background:#edf4fa;color:var(--ink);box-shadow:none;border:1px solid var(--line)}
-  button.danger{background:#fff0f0;color:#b23b3b;box-shadow:none;border:1px solid #ffd4d4}
-  button.ok{background:var(--ok)}
-  button.ng{background:var(--ng)}
-  button:disabled{opacity:.45}
-  .hidden{display:none!important}
-  .progress{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
-  .bar{flex:1;height:10px;background:#edf2f6;border-radius:99px;overflow:hidden}
-  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#9fc2ff);width:0%}
-  .qbox{text-align:center;padding:8px 8px 14px}
-  .qsmall{font-size:14px;color:var(--sub)}
-  .reading{font-size:clamp(30px,7vw,54px);font-weight:800;letter-spacing:.06em;margin:8px 0 4px}
-  .hint{font-size:15px;color:var(--sub)}
-  .canvasWrap{
-    position:relative;background:#fff;border:3px solid #cfe0ef;border-radius:18px;overflow:hidden;
-    width:100%;aspect-ratio: 4 / 3;max-height:58vh;touch-action:none;
-  }
-  canvas{width:100%;height:100%;display:block;touch-action:none;background:
-    linear-gradient(#eef3f7 1px,transparent 1px) 0 50%/100% 50%,
-    linear-gradient(90deg,#eef3f7 1px,transparent 1px) 50% 0/50% 100%,
-    white;}
-  .tools{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
-  .answer{
-    margin-top:12px;padding:16px;border-radius:16px;background:#fff8dc;border:1px solid #ffe9a8;text-align:center
-  }
-  .answer strong{font-size:34px}
-  .judge{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-  .score{text-align:center}
-  .score .big{font-size:64px;font-weight:900;line-height:1;color:var(--accent)}
-  .mistakes{display:grid;gap:8px;margin-top:14px}
-  .mistake{background:#f7f9fb;border:1px solid var(--line);padding:12px;border-radius:14px}
-  .footerNote{font-size:12px;color:#7c8998;line-height:1.6;margin-top:10px}
-  @media (max-width:640px){
-    .menu{grid-template-columns:1fr}
-    .tools{grid-template-columns:1fr 1fr}
-    .tools button:last-child{grid-column:1/-1}
-  }
+:root{
+  --bg:#f5fbff;--card:#fff;--ink:#263244;--sub:#6b7788;--line:#dce8f2;
+  --blue:#5f9cf3;--orange:#f39c12;--green:#27ae60;--red:#e74c3c;--pink:#ffb8c8;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+background:linear-gradient(180deg,#edf8ff 0%,#fff9fb 100%);color:var(--ink);min-height:100vh}
+.wrap{max-width:980px;margin:0 auto;padding:14px 14px 40px}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.bird{
+  width:64px;height:64px;border-radius:50%;background:white;border:2px solid #dbe7ef;
+  box-shadow:0 8px 22px rgba(50,90,130,.12);display:grid;place-items:center;font-size:34px
+}
+h1{font-size:clamp(24px,5vw,36px);margin:0}.sub{font-size:13px;color:var(--sub)}
+.card{background:rgba(255,255,255,.97);border:1px solid #e5edf4;border-radius:22px;padding:18px;
+box-shadow:0 10px 30px rgba(40,80,120,.08);margin-bottom:14px;position:relative}
+.hidden{display:none!important}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.field label{display:block;font-size:13px;color:var(--sub);margin:0 0 6px 4px}
+select,button,input{
+  width:100%;border-radius:14px;font-size:17px;font-weight:700;
+  touch-action:manipulation;-webkit-appearance:none;appearance:none
+}
+select{padding:14px;background:#f3f8fc;border:1px solid var(--line);color:var(--ink)}
+button{border:none;padding:15px;color:white;background:var(--blue);min-height:56px;cursor:pointer}
+button.secondary{background:#eef4f8;color:var(--ink);border:1px solid var(--line)}
+button.danger{background:#fff0f0;color:#b33;border:1px solid #ffd6d6}
+button.orange{background:var(--orange)}
+button.green{background:var(--green)}
+button.red{background:var(--red)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.stat{background:#f7fafc;border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.stat b{display:block;font-size:24px}
+.progress{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.bar{flex:1;height:10px;background:#edf2f6;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--blue)}
+.qbox{text-align:center;padding:6px 0 12px}
+.badge{display:inline-block;padding:6px 12px;border-radius:99px;background:#edf4ff;color:#3563a9;font-size:13px;font-weight:800}
+.sentence{font-size:clamp(24px,5.5vw,40px);font-weight:850;line-height:1.7;margin:12px 0}
+.focus{font-size:clamp(40px,8vw,62px);font-weight:900;margin:6px 0}
+.hint{font-size:15px;color:var(--sub)}
+.answerInput{
+  height:112px;border:3px solid #cfe0ef;background:white;font-size:52px;text-align:center;
+  padding:10px;outline:none;-webkit-user-select:text;user-select:text
+}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.resultBox{margin-top:14px;padding:16px;border-radius:18px;background:#fff8dd;border:1px solid #ffe49a;text-align:center}
+.resultMsg{font-size:30px;font-weight:900}
+.answerStrong{font-size:36px}
+.mascot{display:flex;align-items:center;gap:10px;margin:12px 0;padding:12px;border-radius:16px;background:#fff7fb;border:1px solid #ffdce6}
+.mascot .face{font-size:32px}.mascot .speech{font-weight:800}
+.bigScore{text-align:center;font-size:72px;font-weight:900;color:var(--blue);line-height:1}
+.list{display:grid;gap:8px;margin-top:12px}
+.item{padding:12px;border:1px solid var(--line);border-radius:14px;background:#f8fafc}
+.small{font-size:12px;color:var(--sub);line-height:1.6}
+@media(max-width:650px){
+  .grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr 1fr}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="top">
+  <div class="header">
     <div class="bird">🐦</div>
-    <div>
-      <h1>シマエナガ漢字テスト</h1>
-      <div class="tag">iPad・Apple Pencil対応 / 小学1年生 体験版</div>
-    </div>
+    <div><h1>シマエナガ漢字テスト</h1><div class="sub">iPad・Apple Pencil対応 / 小1〜中3</div></div>
   </div>
 
   <section id="home" class="card">
-    <div class="menu">
+    <div class="grid">
       <div class="field">
         <label>学年</label>
         <select id="grade">
-          <option value="1">小学1年生</option>
-          <option value="2" disabled>小学2年生（次版）</option>
-          <option value="3" disabled>小学3年生（次版）</option>
-          <option value="4" disabled>小学4年生（次版）</option>
-          <option value="5" disabled>小学5年生（次版）</option>
-          <option value="6" disabled>小学6年生（次版）</option>
-          <option value="7" disabled>中学1年生（次版）</option>
-          <option value="8" disabled>中学2年生（次版）</option>
-          <option value="9" disabled>中学3年生（次版）</option>
+          <option value="1">小学1年生</option><option value="2">小学2年生</option>
+          <option value="3">小学3年生</option><option value="4">小学4年生</option>
+          <option value="5">小学5年生</option><option value="6">小学6年生</option>
+          <option value="7">中学1年生</option><option value="8">中学2年生</option>
+          <option value="9">中学3年生</option>
         </select>
       </div>
       <div class="field">
         <label>問題数</label>
-        <select id="count">
-          <option>5</option><option selected>10</option><option>20</option><option>50</option>
-        </select>
+        <select id="count"><option>5</option><option selected>10</option><option>20</option></select>
       </div>
       <div class="field">
         <label>テストの種類</label>
@@ -123,382 +98,314 @@
           <option value="mix" selected>ミックス</option>
         </select>
       </div>
+      <div class="field">
+        <label>出題</label>
+        <select id="source">
+          <option value="all" selected>通常テスト</option>
+          <option value="wrong">まちがい復習</option>
+        </select>
+      </div>
     </div>
-    <button type="button" id="start" style="margin-top:14px;position:relative;z-index:20;touch-action:manipulation;-webkit-user-select:none;user-select:none;">テストをはじめる</button>
-    <div class="footerNote">
-      ※iPadでは入力欄をタップしてからApple Pencilで書いてください。
-      書き終わったらすぐ下の「判定する」を押すと自動判定します。<br>
-      読み方問題は【 】で囲まれた漢字部分だけを書きます（例：【早】く → はや、【出】ます → で）。
+    <button type="button" id="start" style="margin-top:14px;font-size:22px;min-height:68px">テストをはじめる</button>
+
+    <div class="mascot"><div class="face">🐦</div><div class="speech" id="homeSpeech">きょうもいっしょに がんばろう！</div></div>
+
+    <div class="stats">
+      <div class="stat"><span>テスト回数</span><b id="statTests">0</b></div>
+      <div class="stat"><span>平均点</span><b id="statAvg">--</b></div>
+      <div class="stat"><span>苦手</span><b id="statWrong">0</b></div>
+    </div>
+    <div class="small" style="margin-top:10px">
+      Apple Pencilは入力欄をタップしてから書いてください。読み方問題は【 】内の漢字部分だけを答えます。
+      成績と間違い問題はこのiPadのブラウザ内に保存されます。
     </div>
   </section>
 
   <section id="test" class="card hidden">
     <div class="progress">
-      <b id="counter">1 / 10</b>
-      <div class="bar"><i id="bar"></i></div>
-      <b id="miniScore">0点</b>
+      <b id="counter">1 / 10</b><div class="bar"><i id="bar" style="width:0%"></i></div><b id="miniScore">0点</b>
     </div>
-
     <div class="qbox">
-      <div id="typeBadge" style="display:inline-block;padding:6px 12px;border-radius:999px;background:#edf4ff;color:#3563a9;font-size:13px;font-weight:800;margin-bottom:6px;">書き取り問題</div>
-      <div id="instruction" class="qsmall">【　】のことばを 漢字で書きましょう</div>
-      <div id="sentence" style="font-size:clamp(22px,5vw,38px);font-weight:800;line-height:1.7;margin:10px 0;">【やま】に のぼります。</div>
-      <div id="reading" class="reading">やま</div>
-      <div id="hint" class="hint">「やま」を漢字で書こう ・ 1文字</div>
+      <div id="typeBadge" class="badge">書き取り問題</div>
+      <div id="instruction" class="sub" style="margin-top:8px">【 】のことばを漢字で書きましょう</div>
+      <div id="sentence" class="sentence"></div>
+      <div id="focus" class="focus"></div>
+      <div id="hint" class="hint"></div>
     </div>
 
-    <div style="margin:10px 0 12px">
-      <div style="font-size:14px;color:#66758a;margin-bottom:6px;font-weight:700">Apple Pencilで下の入力欄に書いてください</div>
-      <input id="textAnswer" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-        inputmode="text"
-        style="width:100%;height:110px;border:3px solid #cfe0ef;border-radius:18px;background:white;
-        font-size:52px;font-weight:800;text-align:center;padding:12px;outline:none;
-        -webkit-user-select:text;user-select:text;"
-        placeholder="ここに書く">
-    </div>
+    <input id="textAnswer" class="answerInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" placeholder="ここに書く">
+    <button type="button" id="judgeBtn" class="orange" style="margin-top:12px;font-size:22px;min-height:68px">判定する</button>
 
-    <button id="judgeBtn" style="background:#f39c12;margin:0 0 14px 0;font-size:22px;min-height:68px">
-      判定する
-    </button>
-
-    <div class="canvasWrap" style="max-height:30vh">
-      <canvas id="pad"></canvas>
-    </div>
-    <div style="font-size:12px;color:#7c8998;margin-top:6px;text-align:center">
-      下の白い欄は自由に書く練習用です。
-    </div>
-
-    <div class="tools" style="grid-template-columns:1fr 1fr">
-      <button id="undo" class="secondary">1つもどす</button>
-      <button id="clear" class="danger">ぜんぶ消す</button>
-    </div>
-
-    <div id="answerBox" class="answer hidden">
-      <div id="judgeMessage" style="font-size:28px;font-weight:900;margin-bottom:8px"></div>
-      こたえ： <strong id="answerText">山</strong>
-      <div class="judge">
-        <button id="nextBtn" class="ok">次の問題へ</button>
-        <button id="retryBtn" class="ng">もう一回</button>
+    <div id="answerBox" class="resultBox hidden">
+      <div id="judgeMessage" class="resultMsg"></div>
+      <div>こたえ：<strong id="answerText" class="answerStrong"></strong></div>
+      <div class="actions">
+        <button type="button" id="nextBtn" class="green">次の問題へ</button>
+        <button type="button" id="retryBtn" class="red">もう一回</button>
       </div>
     </div>
+
+    <div class="mascot"><div class="face">🐦</div><div class="speech" id="testSpeech">ゆっくり、ていねいに書こう！</div></div>
   </section>
 
   <section id="result" class="card hidden">
-    <div class="score">
-      <div>テストけっか</div>
-      <div id="finalScore" class="big">80点</div>
-      <div id="resultText" style="margin-top:8px;font-size:18px;font-weight:800"></div>
-    </div>
-    <div id="mistakes" class="mistakes"></div>
-    <div class="menu" style="margin-top:14px">
-      <button id="retryWrong" class="secondary">まちがいだけ復習</button>
-      <button id="homeBtn">ホームにもどる</button>
+    <div class="bigScore" id="finalScore">100点</div>
+    <div id="resultText" style="text-align:center;font-size:20px;font-weight:850;margin-top:8px"></div>
+    <div class="mascot"><div class="face">🐦</div><div class="speech" id="resultSpeech"></div></div>
+    <div id="mistakes" class="list"></div>
+    <div class="actions" style="margin-top:14px">
+      <button type="button" id="reviewBtn" class="secondary">まちがいを復習</button>
+      <button type="button" id="homeBtn">ホームにもどる</button>
     </div>
   </section>
 </div>
 
 <script>
-const kanji1 = [
-["いち","一","りんごを【いち】こ たべます。"],
-["みぎ","右","【みぎ】の てを あげます。"],
-["あめ","雨","きょうは【あめ】が ふっています。"],
-["えん","円","これは ひゃく【えん】です。"],
-["おう","王","どうぶつの【おう】さまです。"],
-["おと","音","おおきな【おと】が きこえます。"],
-["した","下","つくえの【した】に ほんが あります。"],
-["ひ","火","【ひ】を つかうときは きをつけます。"],
-["はな","花","きれいな【はな】が さいています。"],
-["かい","貝","うみで【かい】を ひろいました。"],
-["がく","学","がっこうで【がく】しゅうします。"],
-["き","気","げん【き】に あいさつします。"],
-["きゅう","九","【きゅう】にん ならんでいます。"],
-["やす","休","きょうは がっこうを【やす】みます。"],
-["たま","玉","まるい【たま】で あそびます。"],
-["きん","金","【きん】ようびに えんそくが あります。"],
-["そら","空","あおい【そら】を みあげます。"],
-["つき","月","よるに【つき】が みえます。"],
-["いぬ","犬","【いぬ】と さんぽします。"],
-["み","見","テレビを【み】ます。"],
-["ご","五","【ご】ほんの えんぴつが あります。"],
-["くち","口","【くち】を おおきく あけます。"],
-["こう","校","【こう】ていで あそびます。"],
-["ひだり","左","【ひだり】を むきます。"],
-["さん","三","【さん】びきの ねこが います。"],
-["やま","山","【やま】に のぼります。"],
-["こ","子","【こ】どもたちが あそんでいます。"],
-["よん","四","【よん】にんで ならびます。"],
-["いと","糸","はりに【いと】を とおします。"],
-["じ","字","きれいな【じ】を かきます。"],
-["みみ","耳","【みみ】で おとを ききます。"],
-["なな","七","【なな】つの ほしが あります。"],
-["くるま","車","【くるま】で でかけます。"],
-["て","手","【て】を あらいます。"],
-["じゅう","十","【じゅう】まで かぞえます。"],
-["で","出","いえを【で】ます。"],
-["おんな","女","【おんな】のこが わらっています。"],
-["ちい","小","【ちい】さい いぬが います。"],
-["うえ","上","つくえの【うえ】に ほんを おきます。"],
-["もり","森","【もり】の なかを あるきます。"],
-["ひと","人","たくさんの【ひと】が います。"],
-["みず","水","【みず】を のみます。"],
-["ただ","正","【ただ】しい こたえを えらびます。"],
-["せい","生","がっこう【せい】かつを たのしみます。"],
-["あお","青","【あお】い そらが ひろがっています。"],
-["ゆう","夕","【ゆう】がたに かえります。"],
-["いし","石","かわで【いし】を ひろいました。"],
-["あか","赤","【あか】い りんごを たべます。"],
-["せん","千","【せん】えんを はらいます。"],
-["かわ","川","【かわ】で さかなを みます。"],
-["さき","先","【さき】に ならんでください。"],
-["はや","早","きょうは【はや】く おきました。"],
-["くさ","草","みどりの【くさ】が はえています。"],
-["あし","足","【あし】で あるきます。"],
-["むら","村","しずかな【むら】に すんでいます。"],
-["だい","大","【おお】きな ぞうが います。"],
-["おとこ","男","【おとこ】のこが はしっています。"],
-["たけ","竹","【たけ】が たくさん はえています。"],
-["なか","中","はこの【なか】に おもちゃが あります。"],
-["むし","虫","【むし】を みつけました。"],
-["まち","町","この【まち】には こうえんが あります。"],
-["てん","天","【てん】きが いいです。"],
-["た","田","【た】んぼに いねが そだっています。"],
-["つち","土","【つち】を ほります。"],
-["に","二","【に】まいの かみを つかいます。"],
-["ひ","日","きょうは いい【ひ】です。"],
-["はい","入","へやに【はい】ります。"],
-["とし","年","ことしは なん【ねん】ですか。"],
-["しろ","白","【しろ】い くもが みえます。"],
-["はち","八","【はち】にんで あそびます。"],
-["ひゃく","百","【ひゃく】まで かぞえます。"],
-["ぶん","文","みじかい【ぶん】を かきます。"],
-["き","木","おおきな【き】の したで やすみます。"],
-["ほん","本","【ほん】を よみます。"],
-["な","名","じぶんの【な】まえを かきます。"],
-["め","目","【め】を とじます。"],
-["た","立","いすから【た】ちます。"],
-["ちから","力","【ちから】いっぱい はしります。"],
-["はやし","林","【はやし】の そばを あるきます。"],
-["ろく","六","【ろく】この みかんが あります。"]
-];
+const BANK = {
+1:[
+["やま","山","【やま】に のぼります。"],["かわ","川","【かわ】で さかなを みます。"],["みず","水","【みず】を のみます。"],
+["ひ","火","【ひ】を つかうときは きをつけます。"],["はな","花","きれいな【はな】が さいています。"],
+["そら","空","あおい【そら】を みあげます。"],["つき","月","よるに【つき】が みえます。"],["いぬ","犬","【いぬ】と さんぽします。"],
+["み","見","テレビを【み】ます。"],["で","出","いえを【で】ます。"],["やす","休","がっこうを【やす】みます。"],
+["はい","入","へやに【はい】ります。"],["た","立","いすから【た】ちます。"],["はや","早","きょうは【はや】く おきました。"],
+["ちい","小","【ちい】さい いぬが います。"],["おお","大","【おお】きな ぞうが います。"],["て","手","【て】を あらいます。"],
+["あし","足","【あし】で あるきます。"],["め","目","【め】を とじます。"],["みみ","耳","【みみ】で おとを ききます。"]
+],
+2:[
+["うみ","海","なつに【うみ】へ いきます。"],["かぜ","風","つよい【かぜ】が ふいています。"],["はる","春","【はる】に さくらが さきます。"],
+["なつ","夏","【なつ】は とても あついです。"],["あき","秋","【あき】に もみじを みます。"],["ふゆ","冬","【ふゆ】に ゆきが ふります。"],
+["あさ","朝","【あさ】ごはんを たべます。"],["ひる","昼","【ひる】やすみに あそびます。"],["よる","夜","【よる】は はやく ねます。"],
+["みせ","店","この【みせ】で かいものを します。"],["かう","買","パンを【か】います。"],["うる","売","やさいを【う】ります。"],
+["かえる","帰","いえに【かえ】ります。"],["はしる","走","こうえんを【はし】ります。"],["あるく","歩","みちを【ある】きます。"],
+["よむ","読","ほんを【よ】みます。"],["かく","書","ノートに【か】きます。"],["きく","聞","せんせいの はなしを【き】きます。"]
+],
+3:[
+["しゅくだい","宿題","いえで【しゅくだい】を します。"],["べんきょう","勉強","まいにち【べんきょう】します。"],["びょういん","病院","【びょういん】へ いきます。"],
+["ぎんこう","銀行","【ぎんこう】で おかねを おろします。"],["えき","駅","【えき】で でんしゃに のります。"],["りょこう","旅行","かぞくで【りょこう】します。"],
+["しゃしん","写真","【しゃしん】を とります。"],["しゅうじ","習字","【しゅうじ】を ならっています。"],["うんどう","運動","まいにち【うんどう】します。"],
+["てつだう","手伝","いえの しごとを【てつだ】います。"],["つかう","使","はさみを【つか】います。"],["まつ","待","ともだちを【ま】ちます。"],
+["はこぶ","運","にもつを【はこ】びます。"],["おくる","送","にもつを【おく】ります。"],["ひらく","開","まどを【ひら】きます。"]
+],
+4:[
+["きせつ","季節","すきな【きせつ】は はるです。"],["けしき","景色","きれいな【けしき】を みました。"],["けんこう","健康","【けんこう】に きをつけます。"],
+["れきし","歴史","日本の【れきし】を べんきょうします。"],["しぜん","自然","【しぜん】を たいせつに します。"],["かんさつ","観察","こんちゅうを【かんさつ】します。"],
+["せつめい","説明","やりかたを【せつめい】します。"],["きろく","記録","けっかを【きろく】します。"],["ひつよう","必要","じゅんびが【ひつよう】です。"],
+["えらぶ","選","すきな ほんを【えら】びます。"],["つづける","続","れんしゅうを【つづ】けます。"],["かえる","変","よていを【か】えます。"]
+],
+5:[
+["せいかく","性格","あかるい【せいかく】です。"],["じょうほう","情報","【じょうほう】を あつめます。"],["かんきょう","環境","【かんきょう】を まもります。"],
+["せきにん","責任","【せきにん】を もって こうどうします。"],["けいけん","経験","よい【けいけん】に なりました。"],["じゅんび","準備","りょこうの【じゅんび】を します。"],
+["かくにん","確認","じかんを【かくにん】します。"],["せいり","整理","つくえを【せいり】します。"],["よぼう","予防","かぜを【よぼう】します。"],
+["みとめる","認","まちがいを【みと】めます。"],["たしかめる","確","こたえを【たし】かめます。"],["くらべる","比","二つを【くら】べます。"]
+],
+6:[
+["けんり","権利","だれにでも【けんり】があります。"],["ぎむ","義務","ルールを まもる【ぎむ】があります。"],["せいさく","政策","国の【せいさく】について 学びます。"],
+["しりょう","資料","【しりょう】を よみます。"],["ろんり","論理","【ろんり】てきに かんがえます。"],["ちいき","地域","【ちいき】の 行事に さんかします。"],
+["ぼうさい","防災","【ぼうさい】について 学びます。"],["ちょうさ","調査","アンケートで【ちょうさ】します。"],["けっか","結果","【けっか】を まとめます。"],
+["ろんじる","論","じぶんの いけんを【ろん】じます。"],["ささえる","支","みんなで【ささ】えます。"],["そなえる","備","さいがいに【そな】えます。"]
+],
+7:[
+["えいきょう","影響","天気は 生活に【えいきょう】を あたえます。"],["かだい","課題","今日の【かだい】に とりくみます。"],["こうりつ","効率","【こうりつ】よく 作業します。"],
+["げんいん","原因","失敗の【げんいん】を 考えます。"],["けつろん","結論","話し合いの【けつろん】を まとめます。"],["こうぞう","構造","建物の【こうぞう】を 調べます。"],
+["しゅだん","手段","目的に 合う【しゅだん】を 選びます。"],["たいしょう","対象","調査の【たいしょう】を 決めます。"],["ひょうげん","表現","文章で【ひょうげん】します。"],
+["ふくむ","含","水分を【ふく】みます。"],["のぞむ","望","成功を【のぞ】みます。"],["あつかう","扱","道具を【あつか】います。"]
+],
+8:[
+["がいねん","概念","新しい【がいねん】を 学びます。"],["きじゅん","基準","判断の【きじゅん】を 決めます。"],["けいこう","傾向","データの【けいこう】を 読み取ります。"],
+["こんきょ","根拠","意見の【こんきょ】を 示します。"],["じょうけん","条件","必要な【じょうけん】を 確認します。"],["すいろん","推論","資料から【すいろん】します。"],
+["せいど","制度","社会の【せいど】について 学びます。"],["とくちょう","特徴","作品の【とくちょう】を まとめます。"],["ぶんせき","分析","結果を【ぶんせき】します。"],
+["うながす","促","行動を【うなが】します。"],["いちじるしい","著","【いちじる】しい 変化が ありました。"],["たもつ","保","安全を【たも】ちます。"]
+],
+9:[
+["いぎ","意義","学ぶ【いぎ】を 考えます。"],["かんてん","観点","複数の【かんてん】から 考えます。"],["きゃっかん","客観","【きゃっかん】的に 判断します。"],
+["こんぽん","根本","問題の【こんぽん】を 見直します。"],["せいごう","整合","内容の【せいごう】性を 確認します。"],["だとう","妥当","その判断が【だとう】か 検討します。"],
+["てんかい","展開","話の【てんかい】を 予想します。"],["ほんしつ","本質","問題の【ほんしつ】を とらえます。"],["ようやく","要約","文章を【ようやく】します。"],
+["になう","担","役割を【にな】います。"],["かかげる","掲","目標を【かか】げます。"],["うながす","促","改善を【うなが】します。"]
+]
+};
 
-const $ = (id)=>document.getElementById(id);
-let questions=[], idx=0, correctCount=0, wrongs=[], strokes=[], testMode="mix";
-let ctx, drawing=false, currentStroke=[];
+const gradeNames={1:"小学1年生",2:"小学2年生",3:"小学3年生",4:"小学4年生",5:"小学5年生",6:"小学6年生",7:"中学1年生",8:"中学2年生",9:"中学3年生"};
+const $=id=>document.getElementById(id);
+const shuffle=a=>[...a].sort(()=>Math.random()-.5);
 
-function shuffle(a){ return [...a].sort(()=>Math.random()-.5); }
+let questions=[],idx=0,correctCount=0,wrongs=[],testMode="mix",currentGrade="1",answered=false;
 
-function resizeCanvas(){
-  const c=$("pad"), r=c.getBoundingClientRect(), dpr=Math.max(1,window.devicePixelRatio||1);
-  c.width=Math.floor(r.width*dpr); c.height=Math.floor(r.height*dpr);
-  ctx=c.getContext("2d");
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  redraw();
+function loadStore(){
+  try{return JSON.parse(localStorage.getItem("shimaKanjiData")||'{"tests":[],"wrongs":{}}')}catch(e){return {tests:[],wrongs:{}}}
 }
-window.addEventListener("resize",resizeCanvas);
+function saveStore(d){localStorage.setItem("shimaKanjiData",JSON.stringify(d))}
+function qKey(q){return [q.grade,q.reading,q.answer,q.sentence,q.type].join("|")}
 
-function pointFromEvent(e){
-  const r=$("pad").getBoundingClientRect();
-  if(e.touches && e.touches[0]) return {x:e.touches[0].clientX-r.left,y:e.touches[0].clientY-r.top};
-  return {x:e.clientX-r.left,y:e.clientY-r.top};
+function updateStats(){
+  const d=loadStore(), g=$("grade").value;
+  const tests=d.tests.filter(x=>String(x.grade)===String(g));
+  $("statTests").textContent=tests.length;
+  $("statAvg").textContent=tests.length?Math.round(tests.reduce((s,x)=>s+x.score,0)/tests.length)+"点":"--";
+  const ws=(d.wrongs[g]||[]);
+  $("statWrong").textContent=ws.length;
+  $("homeSpeech").textContent=tests.length?`${gradeNames[g]}、つづけて がんばろう！`:"きょうもいっしょに がんばろう！";
 }
-function startDraw(e){ e.preventDefault(); drawing=true; currentStroke=[pointFromEvent(e)]; }
-function moveDraw(e){
-  if(!drawing) return; e.preventDefault();
-  const p=pointFromEvent(e); const prev=currentStroke[currentStroke.length-1]; currentStroke.push(p);
-  ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle="#1f2937";ctx.lineWidth=7;
-  ctx.beginPath();ctx.moveTo(prev.x,prev.y);ctx.lineTo(p.x,p.y);ctx.stroke();
-}
-function endDraw(e){
-  if(!drawing) return; e && e.preventDefault(); drawing=false;
-  if(currentStroke.length){strokes.push(currentStroke);currentStroke=[];}
-}
-function redraw(){
-  if(!ctx) return;
-  const r=$("pad").getBoundingClientRect(); ctx.clearRect(0,0,r.width,r.height);
-  ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle="#1f2937";ctx.lineWidth=7;
-  for(const s of strokes){
-    if(s.length<2) continue; ctx.beginPath();ctx.moveTo(s[0].x,s[0].y);
-    for(let i=1;i<s.length;i++) ctx.lineTo(s[i].x,s[i].y); ctx.stroke();
-  }
-}
-const pad=$("pad");
-["pointerdown"].forEach(ev=>pad.addEventListener(ev,startDraw,{passive:false}));
-pad.addEventListener("pointermove",moveDraw,{passive:false});
-pad.addEventListener("pointerup",endDraw,{passive:false});
-pad.addEventListener("pointercancel",endDraw,{passive:false});
+$("grade").addEventListener("change",updateStats);
 
-$("clear").onclick=()=>{strokes=[];redraw();$("textAnswer").value="";$("answerBox").classList.add("hidden");};
-$("undo").onclick=()=>{strokes.pop();redraw();};
-
-let startingNow=false;
+function buildQuestion(raw,type,grade){
+  return {reading:raw[0],answer:raw[1],sentence:raw[2],type,grade:String(grade)}
+}
 function startTest(){
-  if(startingNow) return;
-  startingNow=true;
-  setTimeout(()=>startingNow=false,400);
-
-  const n=Number($("count").value);
+  currentGrade=$("grade").value;
   testMode=$("mode").value;
-  const base=shuffle(kanji1).slice(0,Math.min(n,kanji1.length));
-  questions=base.map((q,i)=>{
-    let type=testMode;
-    if(testMode==="mix") type=(i%2===0 ? "write" : "read");
-    return { reading:q[0], answer:q[1], sentence:q[2], type };
-  });
-  if(testMode==="mix") questions=shuffle(questions);
-  idx=0;correctCount=0;wrongs=[];
+  const n=Number($("count").value);
+  const source=$("source").value;
+  let pool=[];
 
-  $("home").classList.add("hidden");
-  $("result").classList.add("hidden");
-  $("test").classList.remove("hidden");
-
-  window.scrollTo({top:0,behavior:"smooth"});
-  setTimeout(()=>{resizeCanvas();loadQ();},100);
-}
-
-const startBtn=$("start");
-startBtn.addEventListener("click", startTest);
-startBtn.addEventListener("pointerup",(e)=>{
-  if(e.pointerType==="touch" || e.pointerType==="pen"){
-    e.preventDefault();
-    startTest();
+  if(source==="wrong"){
+    const d=loadStore();
+    pool=(d.wrongs[currentGrade]||[]).map(x=>({...x}));
+    if(!pool.length){
+      alert("この学年の復習問題はまだありません。まず通常テストをしてみよう！");
+      return;
+    }
+  }else{
+    const base=shuffle(BANK[currentGrade]||[]);
+    pool=base.map((q,i)=>{
+      let t=testMode;
+      if(t==="mix") t=i%2===0?"write":"read";
+      return buildQuestion(q,t,currentGrade);
+    });
   }
-});
-startBtn.addEventListener("touchend",(e)=>{
-  e.preventDefault();
-  startTest();
-},{passive:false});
+
+  questions=shuffle(pool).slice(0,Math.min(n,pool.length));
+  idx=0;correctCount=0;wrongs=[];
+  $("home").classList.add("hidden");$("result").classList.add("hidden");$("test").classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+  loadQ();
+}
+$("start").addEventListener("click",startTest);
+
+function displaySentence(q){
+  return q.type==="read" ? q.sentence.replace(/【[^】]+】/,`【${q.answer}】`) : q.sentence;
+}
+function expectedAnswer(){const q=questions[idx];return q.type==="write"?q.answer:q.reading}
+function normalize(s){return (s||"").normalize("NFKC").replace(/[\s　]/g,"").trim()}
 
 function loadQ(){
+  answered=false;
   const q=questions[idx];
-  const r=q.reading, a=q.answer, s=q.sentence;
-  if(q.type==="write"){
-    $("typeBadge").textContent="書き取り問題";
-    $("instruction").textContent="【　】のことばを 漢字で書きましょう";
-    $("sentence").textContent=s;
-    $("reading").textContent=r;
-    $("answerText").textContent=a;
-    $("hint").textContent=`「${r}」を漢字で書こう ・ ${[...a].length}文字`;
-  }else{
-    $("typeBadge").textContent="読み方問題";
-    $("instruction").textContent="【　】の漢字の 読み方を ひらがなで書きましょう";
-    const kanjiSentence=s.replace(/【[^】]+】/, `【${a}】`);
-    $("sentence").textContent=kanjiSentence;
-    $("reading").textContent=a;
-    $("answerText").textContent=r;
-    $("hint").textContent=`「${a}」の読み方を ひらがなで書こう`;
-  }
   $("counter").textContent=`${idx+1} / ${questions.length}`;
   $("bar").style.width=`${(idx/questions.length)*100}%`;
-  $("miniScore").textContent=`${Math.round((correctCount/questions.length)*100)}点`;
+  $("miniScore").textContent=`${Math.round(correctCount/questions.length*100)}点`;
   $("answerBox").classList.add("hidden");
+  $("textAnswer").value="";
   $("nextBtn").classList.add("hidden");
   $("retryBtn").classList.remove("hidden");
-  $("textAnswer").value="";
-  strokes=[];redraw();
-}
-function normalizeAnswer(s){
-  return (s || "").normalize("NFKC").replace(/[\\s　]/g,"").trim();
+
+  if(q.type==="write"){
+    $("typeBadge").textContent="書き取り問題";
+    $("instruction").textContent="【 】のことばを漢字で書きましょう";
+    $("sentence").textContent=q.sentence;
+    $("focus").textContent=q.reading;
+    $("hint").textContent=`「${q.reading}」を漢字で書こう`;
+  }else{
+    $("typeBadge").textContent="読み方問題";
+    $("instruction").textContent="【 】の漢字の読み方をひらがなで書きましょう";
+    $("sentence").textContent=displaySentence(q);
+    $("focus").textContent=q.answer;
+    $("hint").textContent=`「${q.answer}」の読み方を書こう`;
+  }
+  $("testSpeech").textContent=["ゆっくり、ていねいに書こう！","よく文章を見てね！","できるよ、がんばって！"][idx%3];
 }
 
-function expectedAnswer(){
-  const q=questions[idx];
-  return q.type==="write" ? q.answer : q.reading;
-}
-
-let judgingNow=false;
 function runJudge(){
-  if(judgingNow) return;
-  judgingNow=true;
-  setTimeout(()=>judgingNow=false,350);
-
-  const user=normalizeAnswer($("textAnswer").value);
-  const expected=normalizeAnswer(expectedAnswer());
-
+  if(answered) return;
+  const user=normalize($("textAnswer").value), expected=normalize(expectedAnswer());
   if(!user){
     $("answerBox").classList.remove("hidden");
     $("judgeMessage").textContent="✍️ まず答えを書いてね";
     $("judgeMessage").style.color="#d68910";
+    $("answerText").textContent=expectedAnswer();
     $("nextBtn").classList.add("hidden");
     $("retryBtn").classList.remove("hidden");
-    $("answerBox").scrollIntoView({behavior:"smooth",block:"center"});
     return;
   }
-
-  const ok = user === expected;
+  const ok=user===expected;
+  answered=true;
   $("answerBox").classList.remove("hidden");
   $("answerText").textContent=expectedAnswer();
+  $("nextBtn").classList.remove("hidden");
 
   if(ok){
+    correctCount++;
     $("judgeMessage").textContent="⭕ 正解！";
     $("judgeMessage").style.color="#27ae60";
-    $("nextBtn").classList.remove("hidden");
     $("retryBtn").classList.add("hidden");
-    correctCount++;
-    $("miniScore").textContent=`${Math.round((correctCount/questions.length)*100)}点`;
+    $("testSpeech").textContent="すごい！そのちょうし！";
   }else{
     $("judgeMessage").textContent="❌ ちがいます";
     $("judgeMessage").style.color="#e74c3c";
-    $("nextBtn").classList.remove("hidden");
     $("retryBtn").classList.remove("hidden");
-    if(!wrongs.includes(questions[idx])) wrongs.push(questions[idx]);
+    wrongs.push({...questions[idx]});
+    $("testSpeech").textContent="だいじょうぶ！もう一回おぼえよう！";
   }
-  $("answerBox").scrollIntoView({behavior:"smooth",block:"center"});
+  $("miniScore").textContent=`${Math.round(correctCount/questions.length*100)}点`;
 }
+$("judgeBtn").addEventListener("click",runJudge);
+$("textAnswer").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();runJudge()}});
 
-$("judgeBtn").addEventListener("click", runJudge);
-$("judgeBtn").addEventListener("pointerup", (e)=>{
-  if(e.pointerType==="touch" || e.pointerType==="pen"){
-    e.preventDefault();
-    runJudge();
-  }
+$("retryBtn").addEventListener("click",()=>{
+  answered=false;$("answerBox").classList.add("hidden");$("textAnswer").value="";
 });
-
-$("textAnswer").addEventListener("keydown",(e)=>{
-  if(e.key==="Enter"){ e.preventDefault(); runJudge(); }
-});
-
-$("retryBtn").onclick=()=>{
-  $("answerBox").classList.add("hidden");
-  $("textAnswer").value="";
-  strokes=[];redraw();
-  $("textAnswer").scrollIntoView({behavior:"smooth", block:"center"});
-};
-
-$("nextBtn").onclick=()=>{
+$("nextBtn").addEventListener("click",()=>{
   idx++;
-  if(idx>=questions.length) finish();
-  else loadQ();
-};
+  if(idx>=questions.length) finish(); else loadQ();
+});
+
 function finish(){
-  $("test").classList.add("hidden");$("result").classList.remove("hidden");
   const score=Math.round(correctCount/questions.length*100);
-  $("finalScore").textContent=`${score}点`;
-  $("resultText").textContent = score===100 ? "パーフェクト！すごい！🎉" : score>=80 ? "とてもよくできました！👏" : score>=60 ? "もう少し！復習しよう😊" : "まちがいを練習してもう一回！";
-  const box=$("mistakes"); box.innerHTML="";
-  if(wrongs.length===0) box.innerHTML='<div class="mistake">まちがいはありません。ぜんぶ正解です！</div>';
-  else {
-    const h=document.createElement("div");h.style.fontWeight="800";h.textContent="まちがえた漢字";box.appendChild(h);
+  const d=loadStore();
+  d.tests.push({grade:currentGrade,score,date:new Date().toISOString()});
+  d.tests=d.tests.slice(-100);
+
+  if(!d.wrongs[currentGrade]) d.wrongs[currentGrade]=[];
+  for(const q of wrongs){
+    if(!d.wrongs[currentGrade].some(x=>qKey(x)===qKey(q))) d.wrongs[currentGrade].push(q);
+  }
+  if(score===100){
+    const usedKeys=new Set(questions.map(q=>qKey(q)));
+    d.wrongs[currentGrade]=d.wrongs[currentGrade].filter(x=>!usedKeys.has(qKey(x)));
+  }
+  saveStore(d);
+
+  $("test").classList.add("hidden");$("result").classList.remove("hidden");
+  $("finalScore").textContent=score+"点";
+  $("resultText").textContent=score===100?"パーフェクト！":score>=80?"とてもよくできました！":score>=60?"あと少し！復習しよう":"まちがいを復習してもう一回！";
+  $("resultSpeech").textContent=score===100?"ぜんぶ正解！すごい！🎉":score>=80?"とってもよくがんばったね！": "まちがいは成長のチャンスだよ！";
+
+  const box=$("mistakes");box.innerHTML="";
+  if(!wrongs.length){
+    box.innerHTML='<div class="item">まちがいはありません！</div>';
+  }else{
+    const h=document.createElement("div");h.style.fontWeight="900";h.textContent="今回まちがえた問題";box.appendChild(h);
     wrongs.forEach(q=>{
-      const d=document.createElement("div");d.className="mistake";
-      if(q.type==="write"){
-        d.innerHTML=`【書き取り】${q.sentence}<br>${q.reading} → <b style="font-size:24px">${q.answer}</b>`;
-      }else{
-        const ks=q.sentence.replace(/【[^】]+】/, `【${q.answer}】`);
-        d.innerHTML=`【読み方】${ks}<br>${q.answer} → <b style="font-size:24px">${q.reading}</b>`;
-      }
+      const d=document.createElement("div");d.className="item";
+      d.innerHTML=`${q.type==="write"?"書き取り":"読み方"}：${displaySentence(q)}<br><b>${expectedFor(q)}</b>`;
       box.appendChild(d);
     });
   }
+  $("reviewBtn").disabled=!wrongs.length;
+  updateStats();
 }
-$("retryWrong").onclick=()=>{
-  if(!wrongs.length) return;
-  questions=shuffle(wrongs);idx=0;correctCount=0;wrongs=[];
-  $("result").classList.add("hidden");$("test").classList.remove("hidden");
-  requestAnimationFrame(()=>{resizeCanvas();loadQ();});
-};
-$("homeBtn").onclick=()=>{
+function expectedFor(q){return q.type==="write"?q.answer:q.reading}
+
+$("reviewBtn").addEventListener("click",()=>{
+  if(!wrongs.length)return;
+  questions=shuffle(wrongs.map(x=>({...x})));idx=0;correctCount=0;wrongs=[];
+  $("result").classList.add("hidden");$("test").classList.remove("hidden");loadQ();
+});
+$("homeBtn").addEventListener("click",()=>{
   $("result").classList.add("hidden");$("test").classList.add("hidden");$("home").classList.remove("hidden");
-};
+  updateStats();window.scrollTo({top:0,behavior:"smooth"});
+});
+
+updateStats();
 </script>
 </body>
 </html>
