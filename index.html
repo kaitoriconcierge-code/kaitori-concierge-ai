@@ -1,56 +1,504 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#101827"><title>買取コンシェルジュ AI査定</title>
-<meta name="apple-mobile-web-app-title" content="買取AI査定">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><style>*{box-sizing:border-box}body{margin:0;background:#eef1f5;color:#111827;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.app{max-width:720px;margin:auto;min-height:100vh;background:#fff}.head{padding:20px 18px;background:#101827;color:#fff}.head h1{font-size:22px;margin:0}.head p{opacity:.8;margin:6px 0 0;font-size:13px}.body{padding:16px}.card{border:1px solid #e5e7eb;border-radius:17px;padding:16px;margin-bottom:14px;box-shadow:0 3px 12px #0000000c}.card h2{font-size:17px;margin:0 0 12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{font-size:12px;color:#4b5563;display:block;margin-bottom:5px}input,select,textarea{width:100%;padding:12px;border:1px solid #d1d5db;border-radius:11px;font-size:16px;background:#fff}textarea{min-height:76px;resize:vertical}.full{grid-column:1/-1}.photo{border:2px dashed #cbd5e1;border-radius:13px;padding:14px;background:#f9fafb}.photoButtons{display:grid;gap:10px}.photoRow{display:flex;align-items:center;gap:10px}.photoBtn{display:flex;align-items:center;justify-content:center;min-height:54px;flex:1;border:2px solid #10b981;border-radius:12px;background:#fff;color:#047857;font-size:16px;font-weight:800;cursor:pointer}.photoBtn input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.thumb{width:54px;height:54px;border-radius:10px;background:#e5e7eb;object-fit:cover;display:none}.photoCount{text-align:center;font-size:13px;color:#6b7280;margin-top:12px}.btn{width:100%;border:0;border-radius:13px;padding:16px;font-size:17px;font-weight:800;background:#111827;color:white}.result{display:none}.status{text-align:center;padding:14px;border-radius:12px;background:#f3f4f6;margin-bottom:12px}.range{text-align:center;background:#f9fafb;border-radius:12px;padding:13px;margin-bottom:12px}.range strong{font-size:23px}.offers{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.offer{padding:12px 5px;border-radius:12px;text-align:center;font-size:12px}.offer b{display:block;font-size:18px;margin-top:5px}.red{background:#fef2f2}.green{background:#ecfdf5;border:2px solid #10b981}.blue{background:#eff6ff}.sell{margin-top:10px;background:#fff7ed;border-radius:12px;padding:13px;text-align:center}.why{margin-top:12px;font-size:14px;line-height:1.65;background:#f9fafb;padding:12px;border-radius:10px}.detail{margin-top:12px;border:1px solid #d1d5db;background:#fff;color:#111827}.detailBox{display:none;margin-top:10px;padding:12px;background:#f8fafc;border-radius:11px;font-size:13px;line-height:1.65}.register{margin-top:12px;background:#059669}.note{font-size:11px;color:#6b7280;margin-top:10px;line-height:1.5}.badge{display:inline-block;background:#ecfdf5;color:#047857;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700;margin-bottom:8px}.past{margin-top:12px;padding:14px;border:2px solid #93c5fd;border-radius:14px;background:#eff6ff}.past h3{font-size:15px;margin:0 0 8px}.pastItem{padding:10px 0;border-top:1px solid #bfdbfe;font-size:13px;line-height:1.65}.pastItem:first-of-type{border-top:0}.pastState{font-size:13px;color:#475569}.pastBtn{margin-top:10px;background:#2563eb}@media(max-width:520px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.offers{grid-template-columns:1fr}.offer{display:flex;justify-content:space-between;align-items:center;padding:12px}.offer b{margin:0}}</style></head><body><div class="app"><header class="head"><h1>買取コンシェルジュ AI査定</h1><p>Ver.4｜過去実績検索・査定修正・履歴保存</p></header><main class="body"><section class="card"><span class="badge">STEP 0</span><h2>👤 査定担当者</h2><label>担当者名</label><input id="staff" placeholder="例：堀、スタッフA" autocomplete="name"><p class="note">誰が査定・修正したかを履歴に残します。</p></section><section class="card"><span class="badge">STEP 1</span><h2>📷 商品写真</h2><div class="photo"><div style="font-size:12px;color:#6b7280;margin-bottom:12px;text-align:center">下のボタンから1枚ずつ追加できます（最大5枚）</div><div class="photoButtons"><div class="photoRow"><label class="photoBtn" for="photo1"><span id="photoLabel1">📷 写真1を追加</span><input id="photo1" type="file" accept="image/*" onchange="photoChanged(1,this)"></label><img id="thumb1" class="thumb" alt="写真1プレビュー"></div><div class="photoRow"><label class="photoBtn" for="photo2"><span id="photoLabel2">📷 写真2を追加</span><input id="photo2" type="file" accept="image/*" onchange="photoChanged(2,this)"></label><img id="thumb2" class="thumb" alt="写真2プレビュー"></div><div class="photoRow"><label class="photoBtn" for="photo3"><span id="photoLabel3">📷 写真3を追加</span><input id="photo3" type="file" accept="image/*" onchange="photoChanged(3,this)"></label><img id="thumb3" class="thumb" alt="写真3プレビュー"></div><div class="photoRow"><label class="photoBtn" for="photo4"><span id="photoLabel4">📷 写真4を追加</span><input id="photo4" type="file" accept="image/*" onchange="photoChanged(4,this)"></label><img id="thumb4" class="thumb" alt="写真4プレビュー"></div><div class="photoRow"><label class="photoBtn" for="photo5"><span id="photoLabel5">📷 写真5を追加</span><input id="photo5" type="file" accept="image/*" onchange="photoChanged(5,this)"></label><img id="thumb5" class="thumb" alt="写真5プレビュー"></div></div><div id="photoCount" class="photoCount">0 / 5枚</div></div></section><section class="card"><span class="badge">STEP 2</span><h2>📝 商品情報</h2><div class="grid"><div><label>カテゴリ</label><select id="category"><option>家電</option><option>スマートフォン</option><option>パソコン</option><option>工具</option><option>家具</option><option>ブランド品</option><option>時計</option><option>その他</option></select></div><div><label>メーカー</label><input id="maker" placeholder="例：Panasonic"></div><div><label>型番・商品名</label><input id="model" placeholder="例：NA-FA70H7"></div><div><label>年式</label><input id="year" inputmode="numeric" placeholder="例：2019"></div><div><label>商品状態</label><select id="condition"><option value="S">S：未使用・未使用に近い</option><option value="A" selected>A：美品</option><option value="B">B：一般中古</option><option value="C">C：傷・汚れあり</option></select></div><div><label>動作状態</label><select id="working"><option>動作確認済み</option><option>一部未確認</option><option>不具合あり</option><option>不動品</option></select></div><div class="full"><label>付属品</label><input id="accessories" placeholder="例：電源コード、リモコン"></div><div class="full"><label>傷・汚れ / 備考</label><textarea id="memo" placeholder="目立つ傷、欠品、使用状況など"></textarea></div></div><button class="btn pastBtn" type="button" onclick="loadPastRecords()">📚 過去実績を検索</button><div id="pastBox" class="past" style="display:none"><h3>📚 過去実績</h3><div id="pastContent" class="pastState">検索中...</div></div><p class="note">メーカー・型番を入力して過去実績を検索できます。同型番の実績を優先表示します。</p></section><button class="btn" onclick="assess()">✨ AI査定する</button><section id="result" class="card result" style="margin-top:14px"><span class="badge">STEP 3</span><h2>AI査定結果</h2><div id="status" class="status">商品情報を分析しました</div><div class="range">推定中古販売相場<br><strong id="market">-</strong></div><div class="offers"><div class="offer red">🔴 利益重視<b id="profit">-</b></div><div class="offer green">⭐ 推奨買取<b id="recommended">-</b></div><div class="offer blue">🔵 成約重視<b id="deal">-</b></div></div><div class="sell">推奨販売価格<br><b id="sell" style="font-size:22px">-</b></div><div id="why" class="why"></div><button class="btn detail" onclick="toggleDetail()">🔎 相場を詳しく確認</button><div id="detailBox" class="detailBox"><b>相場詳細</b><br>ここは次のアップデートで、メルカリ・ヤフオク等の最新販売・落札相場を検索して表示する予定です。<br><br>現在はリアルタイムWeb相場はまだ取得していません。</div><div style="margin-top:14px;padding:14px;border:2px solid #f59e0b;border-radius:14px;background:#fffbeb"><b>✏️ 査定結果を修正</b><div class="grid" style="margin-top:10px"><div><label>修正後の買取額</label><input id="manualBuy" inputmode="numeric" placeholder="例：300"></div><div><label>修正後の販売価格</label><input id="manualSell" inputmode="numeric" placeholder="例：1980"></div><div class="full"><label>修正理由</label><select id="editReason"><option value="">選択してください</option><option>年式が古い</option><option>使用感・傷汚れ</option><option>相場より高い</option><option>相場より安い</option><option>付属品不足</option><option>在庫過多</option><option>店頭判断</option><option>過去の販売実績</option><option>その他</option></select></div><div class="full"><label>修正メモ</label><textarea id="editMemo" placeholder="例：製造から8年超。店頭販売1,980円想定のため買取300円"></textarea></div></div></div><button class="btn register" onclick="saveAssessment()">💾 この査定を実績として保存</button><div id="registered" class="note"></div></section><section class="card"><span class="badge">HISTORY</span><h2>📚 査定履歴</h2><div id="history" class="note">まだ保存された査定はありません。</div><button class="btn detail" onclick="clearHistory()">履歴をすべて削除</button></section></main></div><script>
-const GAS_URL='https://script.google.com/macros/s/AKfycbwSTCcWr194mK1tPLdeqEZUYXjPM-Oe7xHEDe_rM0T_Rr0SS24905wZGfivJRAGVXvtyg/exec';
-const $=id=>document.getElementById(id),yen=n=>Math.max(0,Math.round(n/100)*100).toLocaleString('ja-JP')+'円';
-const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-window.selectedPhotos=[null,null,null,null,null];
-function photoChanged(n,input){const f=input.files&&input.files[0];if(!f)return;window.selectedPhotos[n-1]=f;const img=$('thumb'+n);img.src=URL.createObjectURL(f);img.style.display='block';$('photoLabel'+n).textContent='✅ 写真'+n+'を変更';$('photoCount').textContent=window.selectedPhotos.filter(Boolean).length+' / 5枚'}
-function baseEstimate(){let cat=$('category').value,m=$('model').value.toLowerCase(),mk=$('maker').value.toLowerCase(),y=parseInt($('year').value)||0,now=new Date().getFullYear();let base={家電:18000,スマートフォン:35000,パソコン:30000,工具:18000,家具:12000,ブランド品:30000,時計:25000,その他:15000}[cat]||15000;if(/iphone/.test(m+mk))base=40000;if(/dyson/.test(m+mk))base=24000;if(/panasonic|パナソニック/.test(mk)&&cat==='家電')base=22000;if(y){let age=Math.max(0,now-y);base*=Math.max(.28,1-age*.085)}let c={S:1.18,A:1,B:.82,C:.62}[$('condition').value];base*=c;let w=$('working').value;if(w==='一部未確認')base*=.88;if(w==='不具合あり')base*=.55;if(w==='不動品')base*=.25;return Math.max(1000,base)}
-async function loadPastRecords(){const maker=$('maker').value.trim(),model=$('model').value.trim(),category=$('category').value;if(!maker&&!model){alert('メーカーまたは型番・商品名を入力してください');return}$('pastBox').style.display='block';$('pastContent').innerHTML='検索中...';try{const u=GAS_URL+'?maker='+encodeURIComponent(maker)+'&model='+encodeURIComponent(model)+'&category='+encodeURIComponent(category);const res=await fetch(u);const data=await res.json();if(data.result!=='success')throw new Error(data.message||'検索に失敗しました');const records=data.records||[];if(!records.length){$('pastContent').innerHTML='該当する過去実績はありません。';return}$('pastContent').innerHTML='<b>過去実績：'+records.length+'件</b>'+records.slice(0,5).map(r=>'<div class="pastItem"><b>'+(r.matchType?esc(r.matchType)+'｜':'')+esc(r.maker)+' '+esc(r.model)+'</b>'+(r.year?'<br>'+esc(r.year)+'年':'')+(r.correctedPurchase!==''&&r.correctedPurchase!=null?'<br>前回買取：<b>'+Number(r.correctedPurchase).toLocaleString('ja-JP')+'円</b>':'')+(r.correctedSale!==''&&r.correctedSale!=null?'<br>販売設定：<b>'+Number(r.correctedSale).toLocaleString('ja-JP')+'円</b>':'')+(r.actualSale!==''&&r.actualSale!=null?'<br>実販売：<b>'+Number(r.actualSale).toLocaleString('ja-JP')+'円</b>':'<br>実販売：未登録')+(r.profitRate!==''&&r.profitRate!=null?'<br>利益率：'+(Number(r.profitRate)*100).toFixed(1)+'%':'')+(r.stockDays!==''&&r.stockDays!=null?'<br>在庫日数：'+esc(r.stockDays)+'日':'<br>在庫日数：未登録')+(r.reason?'<br>理由：'+esc(r.reason):'')+(r.memo?'<br>メモ：'+esc(r.memo):'')+'</div>').join('')}catch(e){$('pastContent').innerHTML='⚠️ 過去実績を取得できませんでした。<br>'+esc(e.message)}}
-function assess(){if(!$('maker').value.trim()&&!$('model').value.trim()){alert('メーカーまたは型番・商品名を入力してください');return}loadPastRecords();let mid=baseEstimate(),lo=mid*.82,hi=mid*1.18,sell=lo*.98,net=sell*.9,rec=net*.4,p=rec*.8,d=rec*1.2;$('market').textContent=yen(lo)+' 〜 '+yen(hi);$('profit').textContent=yen(p);$('recommended').textContent=yen(rec);$('deal').textContent=yen(d);$('sell').textContent=yen(sell);$('why').innerHTML='<b>査定理由</b><br>'+esc($('maker').value||'商品')+' '+esc($('model').value||'')+' のカテゴリ・年式・商品状態・動作状態をもとに試算しました。推奨買取額は販売手数料10%と店舗利益を考慮した設定です。<br><span style="color:#b45309">※過去実績は上の「📚 過去実績」に表示します。</span>';$('result').style.display='block';$('result').scrollIntoView({behavior:'smooth'});window.lastRec=rec;window.lastSell=sell;$('manualBuy').value=Math.round(rec/100)*100;$('manualSell').value=Math.round(sell/100)*100}
-function toggleDetail(){let b=$('detailBox');b.style.display=b.style.display==='block'?'none':'block'}
-function saveAssessment(){
-  let staff=$('staff').value.trim();
-  if(!staff){
-    alert('担当者名を入力してください');
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="theme-color" content="#f7fbff" />
+<title>シマエナガ漢字テスト</title>
+<style>
+  :root{
+    --bg:#f6fbff; --card:#ffffff; --ink:#233044; --sub:#66758a; --line:#dbe7f2;
+    --accent:#6ea8fe; --accent2:#ffb7c5; --ok:#27ae60; --ng:#e74c3c;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    margin:0; font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+    background:linear-gradient(180deg,#eef8ff 0%,#fff8fb 100%); color:var(--ink);
+    min-height:100vh; touch-action:manipulation;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:16px 16px 40px}
+  .top{
+    display:flex;align-items:center;gap:12px;margin-bottom:14px
+  }
+  .bird{
+    width:58px;height:58px;border-radius:50%;background:white;border:2px solid #dfeaf3;
+    display:grid;place-items:center;font-size:34px;box-shadow:0 8px 24px rgba(60,100,140,.10)
+  }
+  h1{font-size:clamp(22px,4vw,34px);margin:0}
+  .tag{color:var(--sub);font-size:14px;margin-top:2px}
+  .card{
+    position:relative;z-index:1;
+    background:rgba(255,255,255,.96);border:1px solid #e6eef5;border-radius:22px;
+    box-shadow:0 12px 34px rgba(47,83,115,.09);padding:18px;margin-bottom:14px
+  }
+  .menu{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .field label{display:block;font-size:13px;color:var(--sub);margin:0 0 7px 4px}
+  select,button{
+    width:100%;border:none;border-radius:14px;padding:14px 16px;font-size:17px;font-weight:700;
+    touch-action:manipulation;-webkit-user-select:none;user-select:none;cursor:pointer;
+  }
+  button{min-height:56px;-webkit-appearance:none;appearance:none}
+  #start{min-height:68px;font-size:22px}
+  #judgeBtn{font-size:22px;min-height:68px}
+
+  select{background:#f2f7fb;color:var(--ink);border:1px solid var(--line)}
+  button{background:var(--accent);color:white;box-shadow:0 6px 16px rgba(70,125,220,.22)}
+  button.secondary{background:#edf4fa;color:var(--ink);box-shadow:none;border:1px solid var(--line)}
+  button.danger{background:#fff0f0;color:#b23b3b;box-shadow:none;border:1px solid #ffd4d4}
+  button.ok{background:var(--ok)}
+  button.ng{background:var(--ng)}
+  button:disabled{opacity:.45}
+  .hidden{display:none!important}
+  .progress{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+  .bar{flex:1;height:10px;background:#edf2f6;border-radius:99px;overflow:hidden}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#9fc2ff);width:0%}
+  .qbox{text-align:center;padding:8px 8px 14px}
+  .qsmall{font-size:14px;color:var(--sub)}
+  .reading{font-size:clamp(30px,7vw,54px);font-weight:800;letter-spacing:.06em;margin:8px 0 4px}
+  .hint{font-size:15px;color:var(--sub)}
+  .canvasWrap{
+    position:relative;background:#fff;border:3px solid #cfe0ef;border-radius:18px;overflow:hidden;
+    width:100%;aspect-ratio: 4 / 3;max-height:58vh;touch-action:none;
+  }
+  canvas{width:100%;height:100%;display:block;touch-action:none;background:
+    linear-gradient(#eef3f7 1px,transparent 1px) 0 50%/100% 50%,
+    linear-gradient(90deg,#eef3f7 1px,transparent 1px) 50% 0/50% 100%,
+    white;}
+  .tools{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
+  .answer{
+    margin-top:12px;padding:16px;border-radius:16px;background:#fff8dc;border:1px solid #ffe9a8;text-align:center
+  }
+  .answer strong{font-size:34px}
+  .judge{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .score{text-align:center}
+  .score .big{font-size:64px;font-weight:900;line-height:1;color:var(--accent)}
+  .mistakes{display:grid;gap:8px;margin-top:14px}
+  .mistake{background:#f7f9fb;border:1px solid var(--line);padding:12px;border-radius:14px}
+  .footerNote{font-size:12px;color:#7c8998;line-height:1.6;margin-top:10px}
+  @media (max-width:640px){
+    .menu{grid-template-columns:1fr}
+    .tools{grid-template-columns:1fr 1fr}
+    .tools button:last-child{grid-column:1/-1}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="bird">🐦</div>
+    <div>
+      <h1>シマエナガ漢字テスト</h1>
+      <div class="tag">iPad・Apple Pencil対応 / 小学1年生 体験版</div>
+    </div>
+  </div>
+
+  <section id="home" class="card">
+    <div class="menu">
+      <div class="field">
+        <label>学年</label>
+        <select id="grade">
+          <option value="1">小学1年生</option>
+          <option value="2" disabled>小学2年生（次版）</option>
+          <option value="3" disabled>小学3年生（次版）</option>
+          <option value="4" disabled>小学4年生（次版）</option>
+          <option value="5" disabled>小学5年生（次版）</option>
+          <option value="6" disabled>小学6年生（次版）</option>
+          <option value="7" disabled>中学1年生（次版）</option>
+          <option value="8" disabled>中学2年生（次版）</option>
+          <option value="9" disabled>中学3年生（次版）</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>問題数</label>
+        <select id="count">
+          <option>5</option><option selected>10</option><option>20</option><option>50</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>テストの種類</label>
+        <select id="mode">
+          <option value="write">漢字を書く</option>
+          <option value="read">読み方を書く</option>
+          <option value="mix" selected>ミックス</option>
+        </select>
+      </div>
+    </div>
+    <button type="button" id="start" style="margin-top:14px;position:relative;z-index:20;touch-action:manipulation;-webkit-user-select:none;user-select:none;">テストをはじめる</button>
+    <div class="footerNote">
+      ※iPadでは入力欄をタップしてからApple Pencilで書いてください。
+      書き終わったらすぐ下の「判定する」を押すと自動判定します。<br>
+      読み方問題は【 】で囲まれた漢字部分だけを書きます（例：【早】く → はや、【出】ます → で）。
+    </div>
+  </section>
+
+  <section id="test" class="card hidden">
+    <div class="progress">
+      <b id="counter">1 / 10</b>
+      <div class="bar"><i id="bar"></i></div>
+      <b id="miniScore">0点</b>
+    </div>
+
+    <div class="qbox">
+      <div id="typeBadge" style="display:inline-block;padding:6px 12px;border-radius:999px;background:#edf4ff;color:#3563a9;font-size:13px;font-weight:800;margin-bottom:6px;">書き取り問題</div>
+      <div id="instruction" class="qsmall">【　】のことばを 漢字で書きましょう</div>
+      <div id="sentence" style="font-size:clamp(22px,5vw,38px);font-weight:800;line-height:1.7;margin:10px 0;">【やま】に のぼります。</div>
+      <div id="reading" class="reading">やま</div>
+      <div id="hint" class="hint">「やま」を漢字で書こう ・ 1文字</div>
+    </div>
+
+    <div style="margin:10px 0 12px">
+      <div style="font-size:14px;color:#66758a;margin-bottom:6px;font-weight:700">Apple Pencilで下の入力欄に書いてください</div>
+      <input id="textAnswer" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+        inputmode="text"
+        style="width:100%;height:110px;border:3px solid #cfe0ef;border-radius:18px;background:white;
+        font-size:52px;font-weight:800;text-align:center;padding:12px;outline:none;
+        -webkit-user-select:text;user-select:text;"
+        placeholder="ここに書く">
+    </div>
+
+    <button id="judgeBtn" style="background:#f39c12;margin:0 0 14px 0;font-size:22px;min-height:68px">
+      判定する
+    </button>
+
+    <div class="canvasWrap" style="max-height:30vh">
+      <canvas id="pad"></canvas>
+    </div>
+    <div style="font-size:12px;color:#7c8998;margin-top:6px;text-align:center">
+      下の白い欄は自由に書く練習用です。
+    </div>
+
+    <div class="tools" style="grid-template-columns:1fr 1fr">
+      <button id="undo" class="secondary">1つもどす</button>
+      <button id="clear" class="danger">ぜんぶ消す</button>
+    </div>
+
+    <div id="answerBox" class="answer hidden">
+      <div id="judgeMessage" style="font-size:28px;font-weight:900;margin-bottom:8px"></div>
+      こたえ： <strong id="answerText">山</strong>
+      <div class="judge">
+        <button id="nextBtn" class="ok">次の問題へ</button>
+        <button id="retryBtn" class="ng">もう一回</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="result" class="card hidden">
+    <div class="score">
+      <div>テストけっか</div>
+      <div id="finalScore" class="big">80点</div>
+      <div id="resultText" style="margin-top:8px;font-size:18px;font-weight:800"></div>
+    </div>
+    <div id="mistakes" class="mistakes"></div>
+    <div class="menu" style="margin-top:14px">
+      <button id="retryWrong" class="secondary">まちがいだけ復習</button>
+      <button id="homeBtn">ホームにもどる</button>
+    </div>
+  </section>
+</div>
+
+<script>
+const kanji1 = [
+["いち","一","りんごを【いち】こ たべます。"],
+["みぎ","右","【みぎ】の てを あげます。"],
+["あめ","雨","きょうは【あめ】が ふっています。"],
+["えん","円","これは ひゃく【えん】です。"],
+["おう","王","どうぶつの【おう】さまです。"],
+["おと","音","おおきな【おと】が きこえます。"],
+["した","下","つくえの【した】に ほんが あります。"],
+["ひ","火","【ひ】を つかうときは きをつけます。"],
+["はな","花","きれいな【はな】が さいています。"],
+["かい","貝","うみで【かい】を ひろいました。"],
+["がく","学","がっこうで【がく】しゅうします。"],
+["き","気","げん【き】に あいさつします。"],
+["きゅう","九","【きゅう】にん ならんでいます。"],
+["やす","休","きょうは がっこうを【やす】みます。"],
+["たま","玉","まるい【たま】で あそびます。"],
+["きん","金","【きん】ようびに えんそくが あります。"],
+["そら","空","あおい【そら】を みあげます。"],
+["つき","月","よるに【つき】が みえます。"],
+["いぬ","犬","【いぬ】と さんぽします。"],
+["み","見","テレビを【み】ます。"],
+["ご","五","【ご】ほんの えんぴつが あります。"],
+["くち","口","【くち】を おおきく あけます。"],
+["こう","校","【こう】ていで あそびます。"],
+["ひだり","左","【ひだり】を むきます。"],
+["さん","三","【さん】びきの ねこが います。"],
+["やま","山","【やま】に のぼります。"],
+["こ","子","【こ】どもたちが あそんでいます。"],
+["よん","四","【よん】にんで ならびます。"],
+["いと","糸","はりに【いと】を とおします。"],
+["じ","字","きれいな【じ】を かきます。"],
+["みみ","耳","【みみ】で おとを ききます。"],
+["なな","七","【なな】つの ほしが あります。"],
+["くるま","車","【くるま】で でかけます。"],
+["て","手","【て】を あらいます。"],
+["じゅう","十","【じゅう】まで かぞえます。"],
+["で","出","いえを【で】ます。"],
+["おんな","女","【おんな】のこが わらっています。"],
+["ちい","小","【ちい】さい いぬが います。"],
+["うえ","上","つくえの【うえ】に ほんを おきます。"],
+["もり","森","【もり】の なかを あるきます。"],
+["ひと","人","たくさんの【ひと】が います。"],
+["みず","水","【みず】を のみます。"],
+["ただ","正","【ただ】しい こたえを えらびます。"],
+["せい","生","がっこう【せい】かつを たのしみます。"],
+["あお","青","【あお】い そらが ひろがっています。"],
+["ゆう","夕","【ゆう】がたに かえります。"],
+["いし","石","かわで【いし】を ひろいました。"],
+["あか","赤","【あか】い りんごを たべます。"],
+["せん","千","【せん】えんを はらいます。"],
+["かわ","川","【かわ】で さかなを みます。"],
+["さき","先","【さき】に ならんでください。"],
+["はや","早","きょうは【はや】く おきました。"],
+["くさ","草","みどりの【くさ】が はえています。"],
+["あし","足","【あし】で あるきます。"],
+["むら","村","しずかな【むら】に すんでいます。"],
+["だい","大","【おお】きな ぞうが います。"],
+["おとこ","男","【おとこ】のこが はしっています。"],
+["たけ","竹","【たけ】が たくさん はえています。"],
+["なか","中","はこの【なか】に おもちゃが あります。"],
+["むし","虫","【むし】を みつけました。"],
+["まち","町","この【まち】には こうえんが あります。"],
+["てん","天","【てん】きが いいです。"],
+["た","田","【た】んぼに いねが そだっています。"],
+["つち","土","【つち】を ほります。"],
+["に","二","【に】まいの かみを つかいます。"],
+["ひ","日","きょうは いい【ひ】です。"],
+["はい","入","へやに【はい】ります。"],
+["とし","年","ことしは なん【ねん】ですか。"],
+["しろ","白","【しろ】い くもが みえます。"],
+["はち","八","【はち】にんで あそびます。"],
+["ひゃく","百","【ひゃく】まで かぞえます。"],
+["ぶん","文","みじかい【ぶん】を かきます。"],
+["き","木","おおきな【き】の したで やすみます。"],
+["ほん","本","【ほん】を よみます。"],
+["な","名","じぶんの【な】まえを かきます。"],
+["め","目","【め】を とじます。"],
+["た","立","いすから【た】ちます。"],
+["ちから","力","【ちから】いっぱい はしります。"],
+["はやし","林","【はやし】の そばを あるきます。"],
+["ろく","六","【ろく】この みかんが あります。"]
+];
+
+const $ = (id)=>document.getElementById(id);
+let questions=[], idx=0, correctCount=0, wrongs=[], strokes=[], testMode="mix";
+let ctx, drawing=false, currentStroke=[];
+
+function shuffle(a){ return [...a].sort(()=>Math.random()-.5); }
+
+function resizeCanvas(){
+  const c=$("pad"), r=c.getBoundingClientRect(), dpr=Math.max(1,window.devicePixelRatio||1);
+  c.width=Math.floor(r.width*dpr); c.height=Math.floor(r.height*dpr);
+  ctx=c.getContext("2d");
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  redraw();
+}
+window.addEventListener("resize",resizeCanvas);
+
+function pointFromEvent(e){
+  const r=$("pad").getBoundingClientRect();
+  if(e.touches && e.touches[0]) return {x:e.touches[0].clientX-r.left,y:e.touches[0].clientY-r.top};
+  return {x:e.clientX-r.left,y:e.clientY-r.top};
+}
+function startDraw(e){ e.preventDefault(); drawing=true; currentStroke=[pointFromEvent(e)]; }
+function moveDraw(e){
+  if(!drawing) return; e.preventDefault();
+  const p=pointFromEvent(e); const prev=currentStroke[currentStroke.length-1]; currentStroke.push(p);
+  ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle="#1f2937";ctx.lineWidth=7;
+  ctx.beginPath();ctx.moveTo(prev.x,prev.y);ctx.lineTo(p.x,p.y);ctx.stroke();
+}
+function endDraw(e){
+  if(!drawing) return; e && e.preventDefault(); drawing=false;
+  if(currentStroke.length){strokes.push(currentStroke);currentStroke=[];}
+}
+function redraw(){
+  if(!ctx) return;
+  const r=$("pad").getBoundingClientRect(); ctx.clearRect(0,0,r.width,r.height);
+  ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle="#1f2937";ctx.lineWidth=7;
+  for(const s of strokes){
+    if(s.length<2) continue; ctx.beginPath();ctx.moveTo(s[0].x,s[0].y);
+    for(let i=1;i<s.length;i++) ctx.lineTo(s[i].x,s[i].y); ctx.stroke();
+  }
+}
+const pad=$("pad");
+["pointerdown"].forEach(ev=>pad.addEventListener(ev,startDraw,{passive:false}));
+pad.addEventListener("pointermove",moveDraw,{passive:false});
+pad.addEventListener("pointerup",endDraw,{passive:false});
+pad.addEventListener("pointercancel",endDraw,{passive:false});
+
+$("clear").onclick=()=>{strokes=[];redraw();$("textAnswer").value="";$("answerBox").classList.add("hidden");};
+$("undo").onclick=()=>{strokes.pop();redraw();};
+
+let startingNow=false;
+function startTest(){
+  if(startingNow) return;
+  startingNow=true;
+  setTimeout(()=>startingNow=false,400);
+
+  const n=Number($("count").value);
+  testMode=$("mode").value;
+  const base=shuffle(kanji1).slice(0,Math.min(n,kanji1.length));
+  questions=base.map((q,i)=>{
+    let type=testMode;
+    if(testMode==="mix") type=(i%2===0 ? "write" : "read");
+    return { reading:q[0], answer:q[1], sentence:q[2], type };
+  });
+  if(testMode==="mix") questions=shuffle(questions);
+  idx=0;correctCount=0;wrongs=[];
+
+  $("home").classList.add("hidden");
+  $("result").classList.add("hidden");
+  $("test").classList.remove("hidden");
+
+  window.scrollTo({top:0,behavior:"smooth"});
+  setTimeout(()=>{resizeCanvas();loadQ();},100);
+}
+
+const startBtn=$("start");
+startBtn.addEventListener("click", startTest);
+startBtn.addEventListener("pointerup",(e)=>{
+  if(e.pointerType==="touch" || e.pointerType==="pen"){
+    e.preventDefault();
+    startTest();
+  }
+});
+startBtn.addEventListener("touchend",(e)=>{
+  e.preventDefault();
+  startTest();
+},{passive:false});
+
+function loadQ(){
+  const q=questions[idx];
+  const r=q.reading, a=q.answer, s=q.sentence;
+  if(q.type==="write"){
+    $("typeBadge").textContent="書き取り問題";
+    $("instruction").textContent="【　】のことばを 漢字で書きましょう";
+    $("sentence").textContent=s;
+    $("reading").textContent=r;
+    $("answerText").textContent=a;
+    $("hint").textContent=`「${r}」を漢字で書こう ・ ${[...a].length}文字`;
+  }else{
+    $("typeBadge").textContent="読み方問題";
+    $("instruction").textContent="【　】の漢字の 読み方を ひらがなで書きましょう";
+    const kanjiSentence=s.replace(/【[^】]+】/, `【${a}】`);
+    $("sentence").textContent=kanjiSentence;
+    $("reading").textContent=a;
+    $("answerText").textContent=r;
+    $("hint").textContent=`「${a}」の読み方を ひらがなで書こう`;
+  }
+  $("counter").textContent=`${idx+1} / ${questions.length}`;
+  $("bar").style.width=`${(idx/questions.length)*100}%`;
+  $("miniScore").textContent=`${Math.round((correctCount/questions.length)*100)}点`;
+  $("answerBox").classList.add("hidden");
+  $("nextBtn").classList.add("hidden");
+  $("retryBtn").classList.remove("hidden");
+  $("textAnswer").value="";
+  strokes=[];redraw();
+}
+function normalizeAnswer(s){
+  return (s || "").normalize("NFKC").replace(/[\\s　]/g,"").trim();
+}
+
+function expectedAnswer(){
+  const q=questions[idx];
+  return q.type==="write" ? q.answer : q.reading;
+}
+
+let judgingNow=false;
+function runJudge(){
+  if(judgingNow) return;
+  judgingNow=true;
+  setTimeout(()=>judgingNow=false,350);
+
+  const user=normalizeAnswer($("textAnswer").value);
+  const expected=normalizeAnswer(expectedAnswer());
+
+  if(!user){
+    $("answerBox").classList.remove("hidden");
+    $("judgeMessage").textContent="✍️ まず答えを書いてね";
+    $("judgeMessage").style.color="#d68910";
+    $("nextBtn").classList.add("hidden");
+    $("retryBtn").classList.remove("hidden");
+    $("answerBox").scrollIntoView({behavior:"smooth",block:"center"});
     return;
   }
 
-  let data={
-    staff:staff,
-    category:$('category').value,
-    maker:$('maker').value.trim(),
-    model:$('model').value.trim(),
-    year:$('year').value.trim(),
-    condition:$('condition').value,
-    operation:$('operation').value,
-    aiPurchase:$('aiPurchase').value,
-    aiSale:$('aiSale').value,
-    correctedPurchase:$('correctedPurchase').value,
-    correctedSale:$('correctedSale').value,
-    reason:$('reason').value,
-    memo:$('memo').value
-  };
+  const ok = user === expected;
+  $("answerBox").classList.remove("hidden");
+  $("answerText").textContent=expectedAnswer();
 
-  fetch(GAS_URL,{
-    method:'POST',
-    mode:'no-cors',
-    headers:{'Content-Type':'text/plain;charset=utf-8'},
-    body:JSON.stringify(data)
-  });
-
-  let arr=JSON.parse(localStorage.getItem('kaitori-assessments')||'[]');
-  arr.unshift(data);
-  localStorage.setItem('kaitori-assessments',JSON.stringify(arr));
-  renderHistory();
-
-  $('registered').innerHTML='⏳ Googleスプレッドシートへ保存中...';
-
-  setTimeout(()=>{
-    $('registered').innerHTML='✅ 査定実績を保存しました';
-  },1500);
+  if(ok){
+    $("judgeMessage").textContent="⭕ 正解！";
+    $("judgeMessage").style.color="#27ae60";
+    $("nextBtn").classList.remove("hidden");
+    $("retryBtn").classList.add("hidden");
+    correctCount++;
+    $("miniScore").textContent=`${Math.round((correctCount/questions.length)*100)}点`;
+  }else{
+    $("judgeMessage").textContent="❌ ちがいます";
+    $("judgeMessage").style.color="#e74c3c";
+    $("nextBtn").classList.remove("hidden");
+    $("retryBtn").classList.remove("hidden");
+    if(!wrongs.includes(questions[idx])) wrongs.push(questions[idx]);
+  }
+  $("answerBox").scrollIntoView({behavior:"smooth",block:"center"});
 }
-function renderHistory(){let arr=JSON.parse(localStorage.getItem('kaitori-assessments')||'[]'),box=$('history');if(!arr.length){box.innerHTML='まだ保存された査定はありません。';return}box.innerHTML=arr.slice(0,20).map(x=>'<div style="padding:10px 0;border-bottom:1px solid #e5e7eb"><b>'+esc(x.no)+'｜'+esc(x.maker||'')+' '+esc(x.model||'')+'</b><br>'+esc(x.datetime)+'　担当：<b>'+esc(x.staff)+'</b><br>AI：買取 '+Number(x.aiBuy).toLocaleString('ja-JP')+'円 / 販売 '+Number(x.aiSell).toLocaleString('ja-JP')+'円<br>確定：<b>買取 '+Number(x.finalBuy).toLocaleString('ja-JP')+'円 / 販売 '+Number(x.finalSell).toLocaleString('ja-JP')+'円</b>'+(x.reason?'<br>修正理由：'+esc(x.reason):'')+(x.memo?'<br>メモ：'+esc(x.memo):'')+'</div>').join('')}
-function clearHistory(){if(confirm('このiPhoneに保存された査定履歴をすべて削除しますか？')){localStorage.removeItem('kaitori-assessments');renderHistory()}}
-renderHistory();</script></body></html>
+
+$("judgeBtn").addEventListener("click", runJudge);
+$("judgeBtn").addEventListener("pointerup", (e)=>{
+  if(e.pointerType==="touch" || e.pointerType==="pen"){
+    e.preventDefault();
+    runJudge();
+  }
+});
+
+$("textAnswer").addEventListener("keydown",(e)=>{
+  if(e.key==="Enter"){ e.preventDefault(); runJudge(); }
+});
+
+$("retryBtn").onclick=()=>{
+  $("answerBox").classList.add("hidden");
+  $("textAnswer").value="";
+  strokes=[];redraw();
+  $("textAnswer").scrollIntoView({behavior:"smooth", block:"center"});
+};
+
+$("nextBtn").onclick=()=>{
+  idx++;
+  if(idx>=questions.length) finish();
+  else loadQ();
+};
+function finish(){
+  $("test").classList.add("hidden");$("result").classList.remove("hidden");
+  const score=Math.round(correctCount/questions.length*100);
+  $("finalScore").textContent=`${score}点`;
+  $("resultText").textContent = score===100 ? "パーフェクト！すごい！🎉" : score>=80 ? "とてもよくできました！👏" : score>=60 ? "もう少し！復習しよう😊" : "まちがいを練習してもう一回！";
+  const box=$("mistakes"); box.innerHTML="";
+  if(wrongs.length===0) box.innerHTML='<div class="mistake">まちがいはありません。ぜんぶ正解です！</div>';
+  else {
+    const h=document.createElement("div");h.style.fontWeight="800";h.textContent="まちがえた漢字";box.appendChild(h);
+    wrongs.forEach(q=>{
+      const d=document.createElement("div");d.className="mistake";
+      if(q.type==="write"){
+        d.innerHTML=`【書き取り】${q.sentence}<br>${q.reading} → <b style="font-size:24px">${q.answer}</b>`;
+      }else{
+        const ks=q.sentence.replace(/【[^】]+】/, `【${q.answer}】`);
+        d.innerHTML=`【読み方】${ks}<br>${q.answer} → <b style="font-size:24px">${q.reading}</b>`;
+      }
+      box.appendChild(d);
+    });
+  }
+}
+$("retryWrong").onclick=()=>{
+  if(!wrongs.length) return;
+  questions=shuffle(wrongs);idx=0;correctCount=0;wrongs=[];
+  $("result").classList.add("hidden");$("test").classList.remove("hidden");
+  requestAnimationFrame(()=>{resizeCanvas();loadQ();});
+};
+$("homeBtn").onclick=()=>{
+  $("result").classList.add("hidden");$("test").classList.add("hidden");$("home").classList.remove("hidden");
+};
+</script>
+</body>
+</html>
